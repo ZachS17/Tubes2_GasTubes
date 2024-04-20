@@ -112,32 +112,35 @@ func dls(currentPageName string, desiredPageName string, visited []string, solut
 	// fmt.Println("Link yang ditelusuri: " + currentPageName)
 	// fmt.Println("Link yang mau dicari: " + desiredPageName)
 
-	// utamain kedalaman
-	if currentDepth == desiredDepth {
-		// fmt.Println("Reached desired depth")
+	// utamain ketemu
+	if currentPageName == desiredPageName {
 		return solution
 	} else {
-		// utamain sudah visited
-		if isInArray(visited, currentPageName) {
-			// fmt.Println("Already visited:", currentPageName)
+		// utamain kedalaman
+		if currentDepth == desiredDepth {
+			// fmt.Println("Reached desired depth")
 			return solution
 		} else {
-
-			visited = append(visited, currentPageName)
-			links, err := GetWikipediaLinks(currentPageName)
-			// menangani error dapat link
-			if err != nil {
-				fmt.Println("Error getting links for", currentPageName, ":", err)
+			// utamain sudah visited
+			if isInArray(visited, currentPageName) {
+				// fmt.Println("Already visited:", currentPageName)
 				return solution
-			}
-			for _, link := range links {
-				// Recursively search for the desired page
-				newSolution := dls(link, desiredPageName, visited, solution, currentDepth+1, desiredDepth)
-				if len(newSolution) > len(solution) {
-					solution = newSolution
+			} else {
+				visited = append(visited, currentPageName)
+				links, err := GetWikipediaLinks(currentPageName)
+				// menangani error dapat link
+				if err != nil {
+					fmt.Println("Error getting links for", currentPageName, ":", err)
+					return solution
 				}
-				if len(newSolution) > 0 && newSolution[len(newSolution)-1] == desiredPageName {
-					return newSolution
+				for _, link := range links {
+					// Recursively search for the desired page
+					newSolution := append([]string{}, solution...)
+					newSolution = append(newSolution, link)
+					newSolution = dls(link, desiredPageName, visited, newSolution, currentDepth+1, desiredDepth)
+					if len(newSolution) > len(solution) && newSolution[len(newSolution)-1] == desiredPageName {
+						return newSolution // Return immediately if the desired page is found
+					}
 				}
 			}
 		}
@@ -147,17 +150,22 @@ func dls(currentPageName string, desiredPageName string, visited []string, solut
 }
 
 func IDS(initialPageName string, desiredPageName string, desiredDepth int) ([]string, bool) {
-	visited := make([]string, 0)
-	solution := []string{initialPageName}
-	hasil := make([]string, 0)
 	var found bool = false
-	var currentDepth int = 0 // Start from depth 1
+	var currentDepth int = 0
+	hasil := make([]string, 0)
+	copyInitialPageName := initialPageName // Initialize copyInitialPageName outside the loop
 	for !found && currentDepth <= desiredDepth {
-		hasil = dls(initialPageName, desiredPageName, visited, solution, currentDepth, desiredDepth) // Pass 0 as current depth to dls
+		fmt.Println(copyInitialPageName, desiredPageName, currentDepth)
+		visited := make([]string, 0)
+		solution := []string{copyInitialPageName}
+		fmt.Println(visited, solution)
+		hasil = dls(copyInitialPageName, desiredPageName, visited, solution, 0, currentDepth) // Pass 0 as current depth to dls
 		if isInArray(hasil, desiredPageName) {
 			found = true
 		}
+		fmt.Println(hasil)
 		currentDepth = currentDepth + 1
+		copyInitialPageName = initialPageName // Reset copyInitialPageName to initialPageName for the next iteration
 	}
 	return hasil, found
 }

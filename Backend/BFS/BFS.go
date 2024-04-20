@@ -65,38 +65,25 @@ func isInArray(slice []string, value string) bool {
 }
 
 // rekursif
-// terima parameter visitedArray, target
-func BFS(currentPageName string, pageName string, visited []string, solution []string) []string {
-	if visited == nil {
-		// If the slice is nil, initialize it with an empty slice
-		visited = make([]string, 0)
-	}
-	if solution == nil {
-		// If the slice is nil, initialize it with an empty slice
-		solution = make([]string, 0)
-	}
-	if currentPageName == pageName { // ketemu
-		return solution
-	} else { // blm ketemu
-		if !isInArray(visited, currentPageName) { // blm dikunjungi
-			links, err := getWikipediaLinks(currentPageName)
-			if err != nil {
-				fmt.Println("Error!")
+// arrayToDiscover berisi semua link dari setiap level
+func BFS(arrayToDiscover []string, visited []string, desiredPageName string, solution []string) []string {
+	// menyimpan semua yang diexpand untuk langsung dipassing tanpa perubahan pada arrayToDiscover
+	tempArrayToDiscover := make([]string, 0)
+	for _, item := range arrayToDiscover {
+		if isInArray(visited, item) { // sudah dikunjungi -> iterasi selanjutnya
+			continue
+		} else {
+			if item == desiredPageName { // ketemu
 				return solution
 			} else {
-				for _, link := range links {
-					visited = append(visited, link)
-					// Recursively call BFS and store the result in a local variable
-					// result := BFS(link, pageName, visited, solution)
-					solution = append(solution, link)
-					// Concatenate the local result with the current solution
-					// solution = append(solution, result...)
-					solution = BFS(link, pageName, visited, solution)
+				temp, err := getWikipediaLinks(item)
+				if err == nil { // kalau ada hasilnya
+					tempArrayToDiscover = append(tempArrayToDiscover, temp...)
 				}
+				// masalah -> harus sambil simpan induknya
+				// solusi (mungkin) -> array of string elemennya, dipisah terakhir untuk pengecekan sudah visit dan ditambah di akhir untuk pencarian berikutnya
 			}
 		}
 	}
-
-	// Add a return statement at the end of the function
 	return solution
 }

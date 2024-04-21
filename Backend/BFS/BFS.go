@@ -1,58 +1,37 @@
 package BFS
 
 import (
-	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
+	"strings"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
-// masalah -> DFS bukan BFS
-func getWikipediaLinks(pageName string) ([]string, error) {
-	// URL of the Wikimedia API endpoint
-	apiUrl := "https://en.wikipedia.org/w/api.php"
-
-	// Parameters for the API request
-	params := map[string]string{
-		"action": "parse",
-		"page":   pageName,
-		"format": "json",
-		"prop":   "links",
-	}
-
-	// Construct the URL with query parameters
-	req, err := http.NewRequest("GET", apiUrl, nil)
+func GetLinks(URL string) []string {
+	resp, err := http.Get(URL)
 	if err != nil {
-		return nil, fmt.Errorf("error creating HTTP request: %v", err)
-	}
-	q := req.URL.Query()
-	for key, value := range params {
-		q.Add(key, value)
-	}
-	req.URL.RawQuery = q.Encode()
-
-	// Make the API request
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error making API request: %v", err)
+		log.Fatal(err)
 	}
 	defer resp.Body.Close()
 
-	// Decode the JSON response
-	var data map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
-		return nil, fmt.Errorf("error decoding JSON response: %v", err)
+	if resp.StatusCode != 200 {
+		log.Fatalf("status code error: %d %s", resp.StatusCode, resp.Status)
 	}
 
-	// Extract links from the response
-	links := data["parse"].(map[string]interface{})["links"].([]interface{})
-	linkTitles := make([]string, len(links))
-	for i, link := range links {
-		title := link.(map[string]interface{})["*"].(string)
-		linkTitles[i] = title
+	doc, err := goquery.NewDocumentFromReader(resp.Body)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	return linkTitles, nil
+	links := []string{}
+	doc.Find("a[href]").Each(func(i int, s *goquery.Selection) {
+		link, _ := s.Attr("href")
+		if strings.HasPrefix(link, "/wiki/") {
+			links = append(links, "https://en.wikipedia.org"+link)
+		}
+	})
+	return links
 }
 
 func isInArray(slice []string, value string) bool {
@@ -64,26 +43,54 @@ func isInArray(slice []string, value string) bool {
 	return false
 }
 
+func lastElement(array []string) string {
+	return array[len(array)-1]
+}
+
 // rekursif
-// arrayToDiscover berisi semua link dari setiap level
-func BFS(arrayToDiscover []string, visited []string, desiredPageName string, solution []string) []string {
-	// menyimpan semua yang diexpand untuk langsung dipassing tanpa perubahan pada arrayToDiscover
-	tempArrayToDiscover := make([]string, 0)
-	for _, item := range arrayToDiscover {
-		if isInArray(visited, item) { // sudah dikunjungi -> iterasi selanjutnya
+// semua elemen berupa arrayString yang terdiri dari semua urutan link
+// perbandingan langsung dilakukan pada elemen terakhir setiap stringarray pada possible solution
+func BFS(possibleSolutions [][]string, visited []string, desiredPageName string) []string {
+	// penyimpanan possibleSolution dengan level yang baru
+	var tempPossibleSolutions [][]string
+	// penelusuran untuk setiap array of string pada possible solutions
+	for _, stringArray := range possibleSolutions {
+		// sudah dikunjungi (elemen terakhir dari setiap array of string) -> iterasi selanjutnya
+		if isInArray(visited, lastElement(stringArray)) {
 			continue
 		} else {
-			if item == desiredPageName { // ketemu
-				return solution
+			// ketemu
+			if lastElement(stringArray) == desiredPageName {
+				return stringArray
 			} else {
-				temp, err := getWikipediaLinks(item)
-				if err == nil { // kalau ada hasilnya
-					tempArrayToDiscover = append(tempArrayToDiscover, temp...)
+				// daftar link dari elemen terakhir (yang akan diexpand)
+				linkArray := GetLinks(lastElement(stringArray))
+				// copy dari yang mau diexpand
+				copyStringArray := stringArray
+				// untuk setiap link ditambahin
+				for _, link := range linkArray {
+					// tambahin link baru
+					copyStringArray = append(copyStringArray, link)
+					// dan dimasukkan dalam semua array sesuai kebutuhan
+					tempPossibleSolutions = append(tempPossibleSolutions, copyStringArray)
+					// pengembalian nilai jadi awal
+					copyStringArray = stringArray
 				}
-				// masalah -> harus sambil simpan induknya
-				// solusi (mungkin) -> array of string elemennya, dipisah terakhir untuk pengecekan sudah visit dan ditambah di akhir untuk pencarian berikutnya
+				visited = append(visited, lastElement(stringArray))
 			}
 		}
 	}
-	return solution
+	// pemanggilan rekursi
+	return BFS(tempPossibleSolutions, visited, desiredPageName)
+}
+
+func CallBFS(initialPageName string, desiredPageName string) ([]string, bool) {
+	found := true
+	possibleSolutions := [][]string{{initialPageName}}
+	var visited []string
+	solution := BFS(possibleSolutions, visited, desiredPageName)
+	if !isInArray(solution, desiredPageName) {
+		found = false
+	}
+	return solution, found
 }

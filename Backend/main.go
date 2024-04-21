@@ -1,32 +1,27 @@
 package main
 
 import (
+	"Backend/BFS"
 	"Backend/IDS"
 	"fmt"
 	"time"
 )
 
 func main() {
-	var awal string = "Barack Obama"
-	var tujuan string = "Michelle Obama"
-	mulai := time.Now()
-	solution, found := IDS.IDS(awal, tujuan, 1)
-	akhir := time.Now()
-	var num int = 0
-	num = 1
-	if !found { // tidak ketemu
-		fmt.Println("Tidak ditemui")
-	}
-	// visited, _ := IDS.GetWikipediaLinks(awal)
-	fmt.Println("Solusi: ")
-	for _, link := range solution {
-		fmt.Println(num, link)
-		num = num + 1
-	}
-	fmt.Println("Banyak link yang ditelusuri:")
-	fmt.Println(len(solution))
-	fmt.Println("Banyak link untuk sampai:")
-	fmt.Println(num)
-	waktuEksekusi := akhir.Sub(mulai)
-	fmt.Println("Waktu eksekusi", waktuEksekusi)
+	startTitle := "https://en.wikipedia.org/wiki/Barack_Obama"    // contoh start page
+	targetTitle := "https://en.wikipedia.org/wiki/Michelle_Obama" // contoh target page
+	waktuMulai := time.Now()
+	temp, found := IDS.IDS(startTitle, targetTitle, 3)
+	waktuAkhir := time.Now()
+	waktuEksekusi := waktuAkhir.Sub(waktuMulai)
+	fmt.Println(found)
+	fmt.Println(temp)
+	fmt.Println(waktuEksekusi)
+	waktuMulai = time.Now()
+	temp, found = BFS.CallBFS(startTitle, targetTitle)
+	waktuAkhir = time.Now()
+	waktuEksekusi = waktuAkhir.Sub(waktuMulai)
+	fmt.Println(found)
+	fmt.Println(temp)
+	fmt.Println(waktuEksekusi)
 }

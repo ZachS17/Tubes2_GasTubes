@@ -1,0 +1,45 @@
+.SearchBarContainer {
+    display:flex;
+}
+
+.SearchBarLabel {
+    flex:1;
+    margin-bottom: 50px;
+}
+
+.InputLabel{
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.LoadingPageHeader {
+    font-size: 40px;
+    font-weight: 900;
+    text-align: center;
+    margin-top: 20%;
+    font-family:sans-serif;
+    font-variant: small-caps;
+}
+
+.ResultPageTitle {
+    font-size: 50px;
+    font-weight:bold;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-top:5%;
+}
+
+.ResultContainer {
+    height:500px;
+    width:700px;
+    background-color: white;
+    align-items: center;
+    border-style: dashed;
+    position:relative;
+    left:25%;
+}
+
+.ExecTimeText {
+    font-size: 20px;
+}

@@ -1,16 +1,30 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-// import logo from './assets/wikipedia logo art.png';
-// import videobg from './assets/background animation.mp4'
+import logo from './assets/wikipedia logo art.png';
+import videobg from './assets/background animation.mp4'
 // import SearchBar from './components/SearchBar.js';
 // import SearchButton from './components/SearchButton.js';
 // import LoadingPage from './components/LoadingPage.js';
-import ResultPage from './components/ResultPage.js';
+// import ResultPage from './components/ResultPage.js';
+import MainPage from './components/MainPage';
 
 function App() {
   return (
+    <Router>
+      <div className="app-container">
+        <Routes>
+          <Route path="/*" element={<Home/>} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+const Home = () => {
+  return (
     <div className="App">
-      {/* <video autoPlay muted loop id="videobg">
+      <video autoPlay muted loop id="videobg">
         <source src={videobg} type="video/mp4" />
       </video>
       <header className="App-header">
@@ -19,13 +33,7 @@ function App() {
           Wikirace
         </p>
       </header>
-      {/* <InitialSearchBar/>
-      <Destination/> */}
-      {/*
-      <SearchBar/>
-      <SearchButton/> */}
-      {/* <LoadingPage/> */}
-      <ResultPage></ResultPage>
+      <MainPage/>
     </div>
   );
 }

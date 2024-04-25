@@ -1,8 +1,7 @@
 // import React, { useState } from 'react';
 import './styles.css'
-import videobg from '../assets/background animation.mp4'
 
-const ResultPage = () => {
+const ResultPage = ({result}) => {
     // const [initialpage, setInitialPage] = useState('');
     // const [destinationPage, setDestinationPage] = useState ('');
 
@@ -15,20 +14,18 @@ const ResultPage = () => {
     // }
 
   return (
-    <div className="ResultPageContainer">
-        <video autoPlay muted loop id="videobg">
-        <source src={videobg} type="video/mp4" />
-      </video>
-        <header className='ResultPageHeader'>
-            <p className='ResultPageTitle'>
-                Result:
-            </p>
-        </header>
-        <div className='ResultContainer'></div>
-        <p className='ExecTimeText'>
-          Execution time : 
-        </p>
-    </div>
+      <div>
+      <ol>
+          {result.path.map((pageURL, index) => (
+          <li key={index}>
+              <a href={pageURL} target="_blank" rel="noopener noreferrer">{pageURL}</a>
+          </li>
+          ))}
+      </ol>
+      <p>Articles Visited: {result.numArticlesVisited}</p>
+      <p>Articles Checked: {result.numArticlesChecked}</p>
+      <p>Execution Time: {result.executionTime} ms</p>
+  </div>
   );
 };
 

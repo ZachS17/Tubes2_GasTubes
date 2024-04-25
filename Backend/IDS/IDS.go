@@ -1,47 +1,12 @@
 package IDS
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 	"strings"
-	"time"
 
-	"github.com/PuerkitoBio/goquery" // Import the HTML parser package
+	"github.com/PuerkitoBio/goquery"
 )
-
-type IDSRes struct {
-	Path               []string      `json:"path"`
-	NumArticlesVisited int           `json:"numArticlesVisited"`
-	NumArticlesChecked int           `json:"numArticlesChecked"`
-	ExecutionTime      time.Duration `json:"executionTime"`
-}
-
-// func GetWikipediaLinks(URL string) []string {
-// 	resp, err := http.Get(URL)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	defer resp.Body.Close()
-
-// 	if resp.StatusCode != 200 {
-// 		log.Fatalf("status code error: %d %s", resp.StatusCode, resp.Status)
-// 	}
-
-// 	doc, err := goquery.NewDocumentFromReader(resp.Body)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	links := []string{}
-// 	doc.Find("a[href]").Each(func(i int, s *goquery.Selection) {
-// 		link, _ := s.Attr("href")
-// 		if strings.HasPrefix(link, "/wiki/") {
-// 			links = append(links, "https://en.wikipedia.org"+link)
-// 		}
-// 	})
-// 	return links
-// }
 
 func GetWikipediaLinks(URL string) []string {
 	resp, err := http.Get(URL)
@@ -59,7 +24,15 @@ func GetWikipediaLinks(URL string) []string {
 		log.Fatal(err)
 	}
 
-	var prefixes = []string{
+	var awalan = []string{
+		"/wiki/Draft:",
+		"/wiki/Module:",
+		"/wiki/MediaWiki:",
+		"/wiki/Index:",
+		"/wiki/Education_Program:",
+		"/wiki/TimedText:",
+		"/wiki/Gadget:",
+		"/wiki/Gadget_Definition:",
 		"/wiki/Main_Page",
 		"/wiki/Main_Page:",
 		"/wiki/Special:",
@@ -74,11 +47,14 @@ func GetWikipediaLinks(URL string) []string {
 	}
 
 	links := []string{}
+	// cari link
 	doc.Find("a[href]").Each(func(i int, s *goquery.Selection) {
 		link, _ := s.Attr("href")
+		// wikipedia page
 		if strings.HasPrefix(link, "/wiki/") {
 			skip := false
-			for _, prefix := range prefixes {
+			// awalan nggak kepakai (diskip)
+			for _, prefix := range awalan {
 				if strings.HasPrefix(link, prefix) {
 					skip = true
 					break
@@ -171,32 +147,4 @@ func IDS(initialPageName string, desiredPageName string) ([]string, int, int) {
 		copyInitialPageName = initialPageName
 	}
 	return result, numArticlesVisited, numArticlesChecked
-}
-
-func IDSHandler(w http.ResponseWriter, r *http.Request) {
-	initialPage := r.URL.Query().Get("start")
-	destinationPage := r.URL.Query().Get("target")
-
-	startTime := time.Now()
-	path, articlesVisited, articlesChecked := IDS(initialPage, destinationPage)
-	finishedTime := time.Now()
-	executionTime := finishedTime.Sub(startTime)
-
-	formatExecutionTime := time.Duration(executionTime.Nanoseconds() / int64(time.Millisecond))
-
-	solution := IDSRes{
-		Path:               path,
-		NumArticlesVisited: articlesVisited,
-		NumArticlesChecked: articlesChecked,
-		ExecutionTime:      formatExecutionTime,
-	}
-
-	jsonResponse, err := json.Marshal(solution)
-	if err != nil {
-		http.Error(w, "Unable to marshal JSON response", http.StatusInternalServerError)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(jsonResponse)
 }

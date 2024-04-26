@@ -4,9 +4,9 @@ import loadingAnimation from '../assets/loading animation.gif'
 
 const LoadingPage = () => {
   return (
-    <div>
+    <div className='LoadingPageContainer'>
       <img src={loadingAnimation} alt="loading" className="loadingAnimation"/>
-      <p>Sedang mencari jawaban, sabar yaa...</p>
+      <p className='LoadingMessage'>Sedang mencari jawaban</p>
     </div>
   );
 };

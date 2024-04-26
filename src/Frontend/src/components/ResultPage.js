@@ -14,17 +14,20 @@ const ResultPage = ({result}) => {
     // }
 
   return (
-      <div>
-      <ol>
-          {result.path.map((pageURL, index) => (
-          <li key={index}>
-              <a href={pageURL} target="_blank" rel="noopener noreferrer">{pageURL}</a>
-          </li>
-          ))}
-      </ol>
-      <p>Articles Visited: {result.numArticlesVisited}</p>
-      <p>Articles Checked: {result.numArticlesChecked}</p>
-      <p>Execution Time: {result.executionTime} ms</p>
+      <div className='ResultContainer'>
+        <p className='ResultPageTitle'>Result:</p>
+        <div className='ResultBox'>
+            <ol>
+                {result.path.map((pageURL, index) => (
+                <ul>
+                    <a href={pageURL} target="_blank" rel="noopener noreferrer">{index+1}. {pageURL}</a>
+                </ul>
+                ))}
+            </ol>
+            <p>Articles Visited: {result.numArticlesVisited}</p>
+            <p>Articles Checked: {result.numArticlesChecked}</p>
+            <p>Execution Time: {result.executionTime} ms</p>
+        </div>
   </div>
   );
 };

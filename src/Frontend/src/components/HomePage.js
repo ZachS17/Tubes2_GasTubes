@@ -5,6 +5,7 @@ import logo from '../assets/wikipedia logo art.png'
 import videobg from '../assets/background animation.mp4'
 import LoadingPage from './LoadingPage';
 import ResultPage from './ResultPage';
+import searchBar from '../assets/search bar.png'
 
 const HomePage = () => {
     const [initialPage, setInitialPage] = useState('');
@@ -46,15 +47,15 @@ const HomePage = () => {
 
     return (
         <div className="App">
+                            <video autoPlay muted loop id="videobg">
+                <source src={videobg} type="video/mp4" />
+            </video>
             {isLoading ? (
                 <LoadingPage/>
                 ) : result ? (
                 <ResultPage result={result} />
                     ):
             <div className='SubApp'>
-                <video autoPlay muted loop id="videobg">
-                <source src={videobg} type="video/mp4" />
-                </video>
                 <header className="App-header">
                 <img src={logo} style={{width:'350px', height:'200px',margin:'10px'}} className="App-logo" alt="logo" />
                 <p className="Title">
@@ -62,32 +63,36 @@ const HomePage = () => {
                 </p>
                 </header>
                 <div className="Container">
-                    <div className='SearchBarContainer'>
-                        <div className='SearchBarLabel'>
+                    <div className="InputContainer">
+                        <div className="InputLabel" id='InitialPage'>
                             <input
                                 type="text"
-                                id="searchInput"
+                                id="SearchInput"
                                 onChange={(e) => setInitialPage(e.target.value)}
                                 placeholder="Initial Page"
                                 value = {initialPage}
+                                
                             />
                         </div>
-                        <div className='SearchBarLabel'>
+                        <div className='InputLabel' id='DestinationPage'>
                             <input
                                 type="text"
-                                id="searchInput"
+                                id="SearchInput"
                                 placeholder="Destination Page"
                                 value={destinationPage}
                                 onChange={(e) => setDestinationPage(e.target.value)}
                             />
                         </div>
                     </div>
-                    <div className='AlgorithmButton'>
-                        <button onClick = {handleBFSClick}>BFS</button>
-                        <button onClick = {handleIDSClick}>IDS</button>
+                    <div className='AlgorithmButtonContainer'>
+                        <button onClick = {handleBFSClick} className='AlgorithmButton' id='BFSButton'>BFS</button>
+                        <button onClick = {handleIDSClick} className='AlgorithmButton' id='IDSButton'>IDS</button>
                     </div>
-                    <div className="SearchButton">
-                        <button onClick={handleSearchClick}>Search</button>
+                    <div className="SearchContainer">
+                        <button onClick={handleSearchClick} id='SearchBarButton'>
+                            Search
+                            <img src={searchBar} alt='SearchBar' id='SearchButton'></img>
+                        </button>
                     </div>
                 </div>
             </div>

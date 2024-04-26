@@ -1,45 +1,151 @@
-.SearchBarContainer {
-    display:flex;
+/* jenis algoritma */
+.AlgorithmButtonContainer {
+    margin-top: 50px;
+    justify-content: center;
+    align-items: center;
 }
 
-.SearchBarLabel {
-    flex:1;
-    margin-bottom: 50px;
+.AlgorithmButton {
+    border:none;
+    outline:none;
+    top: 50%;
+    width: 200px;
+    height: 100px;
+    font-family: monospace;
+    color:white;
+    background: url('../assets/algorithm\ button.png');
+    background-size:contain;
+    background-position:50%;
+    background-repeat: no-repeat;
+    font-family: monospace;
+    font-weight: 100;
+    font-size: 20px;
 }
 
-.InputLabel{
-    display: flex;
-    flex-direction: column;
+.AlgorithmButton:active {
+    transform: scale(0.95);
+}
+  
+#BFSButton {
+left: calc(50% - 200px);
+}
+
+#IDSButton {
+right: calc(50% - 200px);
+}
+
+/* masukan page */
+.InputContainer {
     margin-top: 30px;
-    margin-bottom: 15px;
+    justify-content: center;
+    align-items: center;
 }
 
-.LoadingPageHeader {
-    font-size: 40px;
-    font-weight: 900;
-    text-align: center;
-    margin-top: 20%;
-    font-family:sans-serif;
-    font-variant: small-caps;
+input {
+    width: 300px;
+    border-radius: 5px;
+    border-style: groove;
+    background-color: transparent;
 }
+
+.InputLabel {
+    top: 50%;
+    height: 40px;
+    font-family: monospace;
+    color:white;
+    font-family: monospace;
+    font-weight: 100;
+    font-size: 20px;
+}
+
+#InitialPage {
+    left: calc(50% - 200px);
+    }
+    
+#DestinationPage {
+right: calc(50% - 200px);
+}
+
+/* bagian search */
+
+#SearchButton {
+    margin-top: 85px;
+    position: absolute;
+    border:none;
+    outline:none;
+    height:200px;
+    width: 250px;
+    left:42%;
+    top:62%;
+}
+
+#SearchButton.active:active {
+    transform:scale(0.95);
+}
+
+#SearchBarButton {
+    background: transparent;
+    border:none;
+    outline:none;
+    height: 200px;
+    width: 250px;
+    font-family: monospace;
+    font-size: xx-large;
+}
+
+/* loading page */
+
+.LoadingPageContainer {
+    margin-top: 115px;
+}
+
+.LoadingMessage {
+    font-size: xx-large;
+    font-family: monospace;
+}
+
+/* bagian hasil */
 
 .ResultPageTitle {
     font-size: 50px;
     font-weight:bold;
-    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family:monospace;
     margin-top:5%;
 }
 
 .ResultContainer {
-    height:500px;
-    width:700px;
-    background-color: white;
     align-items: center;
-    border-style: dashed;
-    position:relative;
-    left:25%;
+    border:none;
 }
 
-.ExecTimeText {
-    font-size: 20px;
+.ResultBox {
+    position:absolute;
+    left:325px;
+    background-color: white;
+    height: 500px;
+    width: 750px;
+    border-style: dotted;
+    font-family: monospace;
+    font-size: large;
+    font-weight: 500;
 }
+
+ul, ol {
+    list-style-type: none; /* Remove default list styles */
+    padding: 0; /* Remove default padding */
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
+
+li {
+    position:absolute;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+a:visited {
+    color: blue; /* Inherit color from parent element */
+    text-decoration: none; /* Remove underline */
+  }

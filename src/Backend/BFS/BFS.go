@@ -86,10 +86,15 @@ func init() {
 func loadCache() {
 	cacheMutex.Lock()
 	defer cacheMutex.Unlock()
-	file, err := os.Open("../Backend/cache.gob")
+	file, err := os.Open("/app/Backend/cache.gob")
 	if err != nil {
 		if os.IsNotExist(err) {
-			// Cache file doesn't exist, no need to load anything
+			// Cache file doesn't exist, create it
+			file, err = os.Create("/app/Backend/cache.gob")
+			if err != nil {
+				log.Fatal("Error creating cache file:", err)
+			}
+			defer file.Close()
 			return
 		}
 		log.Fatal("Error opening cache file:", err)
@@ -115,7 +120,7 @@ func loadCache() {
 func saveCache() {
 	cacheMutex.Lock()
 	defer cacheMutex.Unlock()
-	file, err := os.OpenFile("../Backend/cache.gob", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	file, err := os.OpenFile("/app/Backend/cache.gob", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		log.Fatal("Error opening cache file:", err)
 	}

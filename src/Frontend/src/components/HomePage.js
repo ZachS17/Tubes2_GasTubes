@@ -33,7 +33,7 @@ const HomePage = () => {
             const fullInitialPageURL = `https://en.wikipedia.org/wiki/${spacedInitialPage}`;
             const fullDestinationPageURL = `https://en.wikipedia.org/wiki/${spacedDestinationPage}`;
             // minta respon
-            const response = await fetch(`http://localhost:8080/wikirace?&algorithm=${encodeURIComponent(algorithm)}&initial=${encodeURIComponent(fullInitialPageURL)}&destination=${encodeURIComponent(fullDestinationPageURL)}`);
+            const response = await fetch(`http://localhost:8000/wikirace?&algorithm=${encodeURIComponent(algorithm)}&initial=${encodeURIComponent(fullInitialPageURL)}&destination=${encodeURIComponent(fullDestinationPageURL)}`);
             const data = await response.json();
 
             // set state

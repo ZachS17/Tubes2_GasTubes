@@ -30,8 +30,8 @@ func main() {
 	handler := corsHandler.Handler(http.DefaultServeMux)
 
 	http.HandleFunc("/wikirace", algorithmHandler)
-	fmt.Println("Server listening on port 8080...")
-	log.Fatal(http.ListenAndServe(":8080", handler))
+	fmt.Println("Server listening on port 8000...")
+	log.Fatal(http.ListenAndServe(":8000", handler))
 }
 
 func algorithmHandler(w http.ResponseWriter, r *http.Request) {

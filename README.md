@@ -56,7 +56,7 @@ Frontend
 
     `git clone https://github.com/ZachS17/Tubes2_GasTubes.git`
 
-2. Open the command line and change the directory to 'frontend' folder
+2. Open the command line and change the directory to 'Frontend' folder
 
     `cd Tubes2_GasTubes/src/Frontend`
     

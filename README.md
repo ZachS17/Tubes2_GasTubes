@@ -39,7 +39,7 @@ The whole program was written in Go.
 
 
 ## Overview
-![Overview](src/Image/Overview.jpg)
+![Overview](src/Image/Overview.png)
 
 
 ## Setup

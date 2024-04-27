@@ -104,7 +104,7 @@ All the specifications were implemented.
 * [Time](https://pkg.go.dev/time)
 * [Fmt](https://pkg.go.dev/fmt)
 
-for testing purposes:
+For testing purposes:
 * [Postman](https://www.postman.com/downloads/)
 
   

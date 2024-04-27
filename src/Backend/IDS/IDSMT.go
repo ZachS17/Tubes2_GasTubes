@@ -35,7 +35,7 @@ func DLSMT(currentPageName string, desiredPageName string, visited []string, sol
 						// dibuat array baru agar terpisah dari parameter solution
 						newSolution := append([]string{}, solution...)
 						newSolution = append(newSolution, link)
-						newSolution, _ = DLS(link, desiredPageName, visited, newSolution, currentDepth+1, desiredDepth, numArticlesVisited)
+						newSolution, _ = DLSMT(link, desiredPageName, visited, newSolution, currentDepth+1, desiredDepth, numArticlesVisited)
 						results <- struct {
 							solution           []string
 							numArticlesVisited int

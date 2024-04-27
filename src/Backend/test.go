@@ -2,13 +2,14 @@ package main
 
 // import (
 // 	"Backend/BFS"
+// 	"Backend/IDS"
 // 	"fmt"
 // 	"time"
 // )
 
 // func main() {
-// 	startTitle := "https://en.wikipedia.org/wiki/Iowa"     // contoh start page
-// 	targetTitle := "https://en.wikipedia.org/wiki/Bandung" // contoh target page
+// 	startTitle := "https://en.wikipedia.org/wiki/Barack_Obama" // contoh start page
+// 	targetTitle := "https://en.wikipedia.org/wiki/Mike_Pence"  // contoh target page
 
 // 	waktuMulai := time.Now()
 // 	temp, numArticlesVisited, numArticlesChecked := BFS.CallBFS(startTitle, targetTitle)

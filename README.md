@@ -24,7 +24,11 @@ WikiRace or Wiki Game is a game involving Wikipedia, a free online encyclopedia 
 The program is made to solve the WikiRace Game problem and to win the game by implementing the IDS and BFS algorithm. It is a web-based application which receives input in the form of algorithm type, initial article title, and title purpose article. The program provides output in the form of the number of articles examined, the number of articles traversed, the article browsing route (from the initial article to the destination article), and search time (in ms).
 
 ## IDS and BFS Implementation 
-mmm
+### BFS
+Dalam algoritma BFS digunakan sebuah antrian yang elemennya berupa array of string yang melambangkan rute yang sejauh ini sudah ditelusuri. Fungsi dipanggil secara rekursif dengan setiap pemanggilan baru merepresentasikan kedalaman yang lebih besar. Cara kerja algoritmanya dengan melihat semua elemen queue dan mengecek tautan terakhir saja. Tautan tersebut kemudian dipilih untuk diekspansi jika belum diekspansi sebelumnya dan dilakukan pengecekan untuk semua tautan hasil ekspansi. Jika tautan sudah ditemukan, program mengembalikan rutenya, tetapi jika belum akan ditambah pada string array yang mengandung tautan sebelumnya dan ditambahkan pada queuenya. Queue tersebut kemudian digunakan untuk rekursi berikutnya sampai mendapatkan jawabannya.
+
+### IDS
+Algoritma IDS menggunakan parameter string array sebagai pencatatan rute dan menggunakan prinsip DLS. Serupa dengan BFS, tautan terakhir dari array yang akan dicek sifatnya dan diekspansi jika belum sebelumnya. Untuk setiap tautan hasil ekspansi akan ditambahkan pada rutenya dan memanggil DLS tingkat berikutnya. Kedalaman dari DLS akan dicatat pada parameter dan dipanggil oleh IDS sebagai pengendali kedalamannya sesuai konsep IDS. Program akan berhenti dan mengembalikan hasil jika tautan yang ditelusuri sudah sesuai dengan yang diinginkan.
 
 
 ## Technologies Used

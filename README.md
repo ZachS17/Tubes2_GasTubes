@@ -25,10 +25,14 @@ The program is made to solve the WikiRace Game problem and to win the game by im
 
 ## IDS and BFS Implementation 
 ### BFS
-Dalam algoritma BFS digunakan sebuah antrian yang elemennya berupa array of string yang melambangkan rute yang sejauh ini sudah ditelusuri. Fungsi dipanggil secara rekursif dengan setiap pemanggilan baru merepresentasikan kedalaman yang lebih besar. Cara kerja algoritmanya dengan melihat semua elemen queue dan mengecek tautan terakhir saja. Tautan tersebut kemudian dipilih untuk diekspansi jika belum diekspansi sebelumnya dan dilakukan pengecekan untuk semua tautan hasil ekspansi. Jika tautan sudah ditemukan, program mengembalikan rutenya, tetapi jika belum akan ditambah pada string array yang mengandung tautan sebelumnya dan ditambahkan pada queuenya. Queue tersebut kemudian digunakan untuk rekursi berikutnya sampai mendapatkan jawabannya.
+In the BFS algorithm, a queue is used whose elements are an array of strings that represent the routes that have been traced so far. The function is called recursively with each new call representing greater depth. The way the algorithm works is by looking at all queue elements and checking only the last link. The link is then selected for expansion if it has not been expanded previously and a check is carried out for all links resulting from the expansion. If the link has been found, the program returns the route, but if not, it will be added to the string array containing the previous link and added to the queue. The queue is then used for the next recursion until we get the answer.
+
+_(Dalam algoritma BFS digunakan sebuah antrian yang elemennya berupa array of string yang melambangkan rute yang sejauh ini sudah ditelusuri. Fungsi dipanggil secara rekursif dengan setiap pemanggilan baru merepresentasikan kedalaman yang lebih besar. Cara kerja algoritmanya dengan melihat semua elemen queue dan mengecek tautan terakhir saja. Tautan tersebut kemudian dipilih untuk diekspansi jika belum diekspansi sebelumnya dan dilakukan pengecekan untuk semua tautan hasil ekspansi. Jika tautan sudah ditemukan, program mengembalikan rutenya, tetapi jika belum akan ditambah pada string array yang mengandung tautan sebelumnya dan ditambahkan pada queuenya. Queue tersebut kemudian digunakan untuk rekursi berikutnya sampai mendapatkan jawabannya.)_
 
 ### IDS
-Algoritma IDS menggunakan parameter string array sebagai pencatatan rute dan menggunakan prinsip DLS. Serupa dengan BFS, tautan terakhir dari array yang akan dicek sifatnya dan diekspansi jika belum sebelumnya. Untuk setiap tautan hasil ekspansi akan ditambahkan pada rutenya dan memanggil DLS tingkat berikutnya. Kedalaman dari DLS akan dicatat pada parameter dan dipanggil oleh IDS sebagai pengendali kedalamannya sesuai konsep IDS. Program akan berhenti dan mengembalikan hasil jika tautan yang ditelusuri sudah sesuai dengan yang diinginkan.
+The IDS algorithm uses string array parameters as route records and uses the DLS principle. Similar to BFS, the last link of the array will be checked and expanded if it has not been done before. For each link the expansion results will be added to the route and call the next level DLS. The depth of the DLS will be recorded in the parameters and called by the IDS as a depth controller according to the IDS concept. The program will stop and return results if the searched link matches the desired one.
+
+_(Algoritma IDS menggunakan parameter string array sebagai pencatatan rute dan menggunakan prinsip DLS. Serupa dengan BFS, tautan terakhir dari array yang akan dicek sifatnya dan diekspansi jika belum sebelumnya. Untuk setiap tautan hasil ekspansi akan ditambahkan pada rutenya dan memanggil DLS tingkat berikutnya. Kedalaman dari DLS akan dicatat pada parameter dan dipanggil oleh IDS sebagai pengendali kedalamannya sesuai konsep IDS. Program akan berhenti dan mengembalikan hasil jika tautan yang ditelusuri sudah sesuai dengan yang diinginkan.)_
 
 
 ## Technologies Used
@@ -40,6 +44,8 @@ The whole program was written in Go.
 - [x] Choose the algorithm (IDS or BFS) through input from the user
 - [x] Provides output in the form of the number of articles examined, the number of articles traversed, the article browsing route (from the initial article to the destination article), and search time (in ms)
 - [x] Can at least issue one of the shortest routes that is less than 5 minutes in each game
+- [x] **Bonus Feature**: Find the shortest route with a duration of less than one minute
+- [x] **Bonus Feature**: Can be run using Docker for both frontend and backend
 
 
 ## Overview
@@ -86,12 +92,17 @@ All the specifications were implemented.
 
 
 ## Library
-* [Node JS](https://nodejs.org/en/)
 * [React](https://reactjs.org/)
-* [Bootstrap](https://getbootstrap.com/)
-* [Axios](https://axios-http.com/docs/intro)
 * [Golang](https://go.dev/)
-* [Echo](https://echo.labstack.com/)
+* [Encoding](https://pkg.go.dev/encoding)
+* [Log](https://pkg.go.dev/log)
+* [Net](https://pkg.go.dev/net)
+* [Os](https://pkg.go.dev/os)
+* [Strings](https://pkg.go.dev/strings)
+* [Sync](https://pkg.go.dev/sync)
+* [Math](https://pkg.go.dev/math)
+* [Time](https://pkg.go.dev/time)
+* [Fmt](https://pkg.go.dev/fmt)
 
 for testing purposes:
 * [Postman](https://www.postman.com/downloads/)
